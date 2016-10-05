@@ -5,6 +5,7 @@
 'use strict';
 
 import express from 'express';
+import session from 'express-session';
 import favicon from 'serve-favicon';
 import morgan from 'morgan';
 import shrinkRay from 'shrink-ray';
@@ -12,13 +13,26 @@ import bodyParser from 'body-parser';
 import methodOverride from 'method-override';
 import cookieParser from 'cookie-parser';
 import errorHandler from 'errorhandler';
+import redis from 'redis';
 import path from 'path';
-
 import config from './environment';
 
-export default function(app) {
-  var env = app.get('env');
+const redisStore = require('connect-redis')(session);
+if(process.env.REDIS_URL) //necessary for heroku
+  var client = redis.createClient(process.env.REDIS_URL);
+else
+  var client = redis.createClient();
 
+
+export default function(app) {
+  var sessionMiddleware = session({
+    secret: config.secrets.session,
+    store: new redisStore({ host: 'localhost', port: 6379, client: client,ttl : 260}),
+    saveUninitialized: false,
+    resave: false
+  });
+  app.use(sessionMiddleware);
+  var env = app.get('env');
   if(env === 'development' || env === 'test') {
     app.use(express.static(path.join(config.root, '.tmp')));
   }

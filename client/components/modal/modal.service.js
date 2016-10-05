@@ -2,7 +2,7 @@
 
 import angular from 'angular';
 
-export function Modal($rootScope, $uibModal) {
+export function Modal($rootScope, $uibModal, Auth) {
   /**
    * Opens a modal
    * @param  {Object} scope      - an object to be merged with modal's scope
@@ -68,11 +68,153 @@ export function Modal($rootScope, $uibModal) {
             del.apply(event, args);
           });
         };
+      },
+
+      edit(ed = angular.noop) {
+
+        return function() {
+          var args = Array.prototype.slice.call(arguments);
+          var name = args.shift();
+          var editModal;
+
+          editModal = openModal({
+            modal: {
+              dismissable: true,
+              title: 'Confirm Delete',
+              html: `<p>Are you sure you want to make these changes ?</p>`,
+              buttons: [{
+                classes: 'btn-default',
+                text: 'Yes',
+                click(e) {
+                  editModal.close(e);
+                }
+              }, {
+                classes: 'btn-danger',
+                text: 'No',
+                click(e) {
+                  editModal.dismiss(e);
+                }
+              }]
+            }
+          }, 'modal-danger');
+
+          editModal.result.then(function(event) {
+            ed(args);
+          });
+
+        };
+      },
+      error(err = angular.noop) {
+        /**
+         * Open a delete confirmation modal
+         * @param  {String} name   - name or info to show on modal
+         * @param  {All}           - any additional args are passed straight to del callback
+         */
+        return function() {
+          var args = Array.prototype.slice.call(arguments);
+          var name = args.shift();
+          var errorModal;
+
+          errorModal = openModal({
+            modal: {
+              dismissable: true,
+              title: 'Error',
+              html: `<p>${name}</p>`,
+              buttons: [{
+                classes: 'btn-danger',
+                text: 'OK',
+                click(e) {
+                  errorModal.close(e);
+                }
+              }]
+            }
+          }, 'modal-danger');
+
+          errorModal.result.then(function(event) {
+            err(args);
+          });
+        };
+      },
+      success(succ = angular.noop) {
+        /**
+         * Open a delete confirmation modal
+         * @param  {String} name   - name or info to show on modal
+         * @param  {All}           - any additional args are passed straight to del callback
+         */
+        return function() {
+          var args = Array.prototype.slice.call(arguments);
+          var message = args.shift();
+          var successModal;
+
+          successModal = openModal({
+            modal: {
+              dismissable: true,
+              title: 'Success',
+              html: `<p>${message}</p>`,
+              buttons: [{
+                classes: 'btn-primary',
+                text: 'OK',
+                click(e) {
+                  successModal.close(e);
+                }
+              }]
+            }
+          }, 'modal-primary');
+
+          successModal.result.then(function(event) {
+            succ(args);
+          });
+        };
+      },
+    },
+
+    input: {
+      login(log = angular.noop) {
+        /**
+         * Open a delete confirmation modal
+         * @param  {String} name   - name or info to show on modal
+         * @param  {All}           - any additional args are passed straight to del callback
+         */
+        return function() {
+          var args = Array.prototype.slice.call(arguments);
+          var name = args.shift();
+          var loginModal;
+          var modalData = {}; 
+          loginModal = openModal({
+            modal: {
+              data: modalData,
+              form: true,
+              dismissable: true,
+              title: 'Login',
+              html: `<p>Enter credentials</p>`,
+              buttons: [{
+                classes: 'btn-default',
+                text: 'Login',
+                click(e) {
+                  loginModal.close(e);
+                }
+              }, {
+                classes: 'btn-danger',
+                text: 'Cancel',
+                click(e) {
+                  loginModal.dismiss(e);
+                }
+              }]
+            }
+          }, 'modal-primary');
+
+          loginModal.result.then(function(event) {
+            Auth.login({email: modalData.email, password: modalData.password})
+              .then(response => log(response))
+              .catch(err => log(err));
+          });
+        };
+
       }
     }
   };
 }
 
-export default angular.module('pandaApp')
+export default angular.module('pandaApp.Modal', [])
   .factory('Modal', Modal)
   .name;

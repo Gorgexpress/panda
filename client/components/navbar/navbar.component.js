@@ -5,8 +5,11 @@ import angular from 'angular';
 
 export class NavbarComponent {
   menu = [{
-    title: 'Home',
-    state: 'main'
+    title: 'Settings',
+    state: 'main',
+  }, {
+    title: 'Calendar',
+    state: 'calendar'
   }];
   isCollapsed = true;
 

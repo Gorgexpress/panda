@@ -5,6 +5,7 @@ var controller = require('./thing.controller');
 
 var router = express.Router();
 
-router.get('/', controller.index);
+router.get('/init', controller.init);
+router.put('/edit', controller.edit);
 
 module.exports = router;

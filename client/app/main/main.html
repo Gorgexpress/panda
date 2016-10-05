@@ -1,18 +1,76 @@
 <header class="hero-unit" id="banner">
   <div class="container">
-    <h1>'Allo, 'Allo!</h1>
-    <p class="lead">Kick-start your next web app with Angular Fullstack</p>
-    <img src="assets/images/yeoman.png" alt="I'm Yeoman">
-  </div>
-</header>
+    <div class="row">
+      <div class="col-md-offset-4">
+    <div ng-if="!$ctrl.Auth.isLoggedIn()">
+      <p class="lead">Please log in</p>
+      <button class="btn btn-primary" ng-click=$ctrl.login()>Login</button>
+    </div>
+    <div ng-if="$ctrl.Auth.isLoggedIn()">
 
-<div class="container">
-  <div class="row">
-    <div class="col-lg-12">
-      <h1 class="page-header">Features:</h1>
-      <ul class="nav nav-tabs nav-stacked col-md-4 col-lg-4 col-sm-6" ng-repeat="thing in $ctrl.awesomeThings">
-        <li><a href="#" uib-tooltip="{{thing.info}}">{{thing.name}}</a></li>
-      </ul>
+
+
+      <form name="userForm" ng-submit="$ctrl.edit(userForm.$valid)" novalidate>
+        <dl class="dl-horizontal">
+          <dt>First Name</dt>
+          <dd>
+          <input class="form-control" ng-show="$ctrl.editEnabled" type="text" ng-model="$ctrl.userInfo.firstName">
+          <span ng-show="!$ctrl.editEnabled">{{$ctrl.userInfo.firstName}}</span>
+          </dd>
+          <dt>Last Name</dt>
+          <dd>
+          <input class="form-control" ng-show="$ctrl.editEnabled" type="text" ng-model="$ctrl.userInfo.lastName">
+          <span ng-show="!$ctrl.editEnabled">{{$ctrl.userInfo.lastName}}</span>
+          </dt>
+          <dt>Email</dt>
+          <dd>
+          <input class="form-control" ng-show="$ctrl.editEnabled" type="email" ng-model="$ctrl.userInfo.email">
+          <span ng-show="!$ctrl.editEnabled">{{$ctrl.userInfo.email}}</span>
+          </dd>
+
+          <dt>Phone Number</dt>
+          <dd>
+          <input class="form-control" ng-show="$ctrl.editEnabled" type="tel" ng-model="$ctrl.userInfo.phone">
+          <span ng-show="!$ctrl.editEnabled">{{$ctrl.userInfo.phone}}</span>
+          </dd>
+
+          <dt>Enable Text Messaging</dt>
+          <dd>
+          <input class="checkbox" type="checkbox" ng-model="$ctrl.userInfo.receiveSmsNotifications" ng-disabled="!$ctrl.editEnabled">
+          </dd>
+
+          <dt>Enable Email Notifications</dt>
+          <dd>
+          <input class="checkbox" type="checkbox" ng-model="$ctrl.userInfo.receiveEmail" ng-disabled="!$ctrl.editEnabled">
+          </dd>
+          <div ng-show=$ctrl.editEnabled>
+            <dt>Current Password</dt>
+            <dd>
+            <input class="form-control" type="password" ng-model="$ctrl.userInfo.currentPassword">
+            </dd>
+          </div>
+          <dt></dt>
+          <dd class="row" ng-show="$ctrl.editEnabled">
+          <button ng-show="$ctrl.editEnabled" type="button" ng-class="!$ctrl.editPassword ? 'btn btn-primary' : 'btn btn-danger'" ng-click="$ctrl.toggleEditPassword()">{{!$ctrl.editPassword ? 'Change Password' : 'Cancel'}}</button>
+          </dd>
+          <div ng-show="$ctrl.editPassword">
+            <dt>New Password</dt>
+            <dd>
+            <input class="form-control" type="password" ng-model="$ctrl.userInfo.password">
+            </dd>
+
+            <dt>Confirm New Password</dt>
+            <dd>
+            <input class="form-control" type="password" ng-model="$ctrl.userInfo.confirmPassword">
+            </dd>
+          </div>
+        </dl>
+
+        <button type="button" ng-class="$ctrl.editEnabled ? 'btn btn-danger pull-right' : 'btn btn-primary pull-right'" ng-click="$ctrl.toggleEditMode()">{{$ctrl.editEnabled ? 'Cancel' : 'Edit'}}</button>
+        <button ng-show="$ctrl.editEnabled" type="submit" class="btn btn-primary pull-right">Confirm</button>
+      </form>
+      </div>
+  </div>
     </div>
   </div>
-</div>
+</header>

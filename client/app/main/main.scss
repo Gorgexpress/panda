@@ -17,7 +17,6 @@
   position: relative;
   padding: 30px 15px;
   color: #F5F5F5;
-  text-align: center;
   text-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
   background: #4393B9;
 }
@@ -25,3 +24,22 @@
 .navbar-text {
   margin-left: 15px;
 }
+
+input {
+  color: #000000;
+}
+
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+.form-control {
+    max-width: 250px;
+    margin-bottom: 10px;
+}
+
+.input-group {
+    max-width: 250px;
+}
+
+

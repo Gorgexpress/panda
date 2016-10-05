@@ -1,0 +1,32 @@
+<header class="hero-unit" id="banner">
+  <div class="container">
+    <table class="table table-bordered">
+      <tr>
+        <th ng-repeat="day in ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'] track by $index" ng-show="$ctrl.showDay[$index]" >{{day}}</th>
+      </tr>
+      <tr>
+        <th ng-repeat="date in $ctrl.dates track by $index" ng-class="$ctrl.daySelected[$index] ? 'active-table-cell' : '' " ng-click="$ctrl.daySelected[$index] = !$ctrl.daySelected[$index]" ng-show="$ctrl.showDay[$index]">
+          {{date | date:'MM/dd'}}
+        </th>
+      </tr>
+    </table>
+    Start Date: 
+    <p class="input-group">
+    <input type="text" uib-datepicker-popup="MM/dd/yyyy" class="form-control" ng-model="$ctrl.startDate" ng-change="$ctrl.startDateChanged()" is-open="$ctrl.startDateOpened" ng-click="$ctrl.startDateOpened = true" datepicker-options="$ctrl.datePickerOptions">
+    <span class="input-group-btn">
+      <button type="button" class="btn btn-default" ng-click="$ctrl.startDateOpened = true"><i class="glyphicon glyphicon-calendar"></i></button>
+    </span>
+    </p>
+    <br>
+    End Date: 
+    <p class="input-group">
+    <input type="text" uib-datepicker-popup="MM/dd/yyyy" class="form-control" ng-model="$ctrl.endDate" ng-change="$ctrl.endDateChanged()" is-open="$ctrl.endDateOpened" ng-click="$ctrl.endDateOpened = true" datepicker-options="$ctrl.datePickerOptions" ng-disabled="$ctrl.toEndOfMonth"> 
+    <span class="input-group-btn">
+      <button type="button" class="btn btn-default" ng-click="$ctrl.endDateOpened = true"><i class="glyphicon glyphicon-calendar"></i></button>
+    </span>
+    </p>
+    Set to end of month: <input type="checkbox" ng-model="$ctrl.toEndOfMonth" ng-click="$ctrl.toEndOfMonthChanged()"><br>
+  </div>
+</header>
+
+

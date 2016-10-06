@@ -6,7 +6,7 @@
       <p class="lead">Please log in</p>
       <button class="btn btn-primary" ng-click=$ctrl.login()>Login</button>
     </div>
-    <div ng-if="$ctrl.Auth.isLoggedIn()">
+    <div ng-if="$ctrl.Auth.isLoggedIn()" ng-init="$ctrl.userInfo = $ctrl.Auth.getUser()">
 
 
 
@@ -24,7 +24,10 @@
           </dt>
           <dt>Email</dt>
           <dd>
-          <input class="form-control" ng-show="$ctrl.editEnabled" type="email" ng-model="$ctrl.userInfo.email">
+          <input class="form-control" name="email" ng-show="$ctrl.editEnabled" type="email" ng-model="$ctrl.userInfo.email">
+          <div ng-messages="userForm.email.$error" ng-if="userForm.email.$dirty">
+            <div ng-message="email">Not a valid email address</div>
+            </div>
           <span ng-show="!$ctrl.editEnabled">{{$ctrl.userInfo.email}}</span>
           </dd>
 
@@ -50,6 +53,7 @@
             </dd>
           </div>
           <dt></dt>
+
           <dd class="row" ng-show="$ctrl.editEnabled">
           <button ng-show="$ctrl.editEnabled" type="button" ng-class="!$ctrl.editPassword ? 'btn btn-primary' : 'btn btn-danger'" ng-click="$ctrl.toggleEditPassword()">{{!$ctrl.editPassword ? 'Change Password' : 'Cancel'}}</button>
           </dd>
@@ -61,7 +65,7 @@
 
             <dt>Confirm New Password</dt>
             <dd>
-            <input class="form-control" type="password" ng-model="$ctrl.userInfo.confirmPassword">
+            <input class="form-control" type="password" ng-model="$ctrl.confirmPassword">
             </dd>
           </div>
         </dl>

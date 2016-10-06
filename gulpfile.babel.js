@@ -566,6 +566,7 @@ grunt.initConfig({
             dir: paths.dist,
             commit: true,
             push: true,
+            force: true,
             connectCommits: false,
             message: 'Built %sourceName% from commit %sourceCommit% on branch %sourceBranch%'
         },

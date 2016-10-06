@@ -83,7 +83,7 @@ export function Modal($rootScope, $uibModal, Auth) {
               title: 'Confirm Delete',
               html: `<p>Are you sure you want to make these changes ?</p>`,
               buttons: [{
-                classes: 'btn-default',
+                classes: 'btn-primary',
                 text: 'Yes',
                 click(e) {
                   editModal.close(e);
@@ -188,7 +188,7 @@ export function Modal($rootScope, $uibModal, Auth) {
               title: 'Login',
               html: `<p>Enter credentials</p>`,
               buttons: [{
-                classes: 'btn-default',
+                classes: 'btn-primary',
                 text: 'Login',
                 click(e) {
                   loginModal.close(e);

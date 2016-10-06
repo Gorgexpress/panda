@@ -11,7 +11,7 @@ export function AuthService($http, $q) {
   var currentUser = null;
   var Auth = {
     login({email, password}, callback?: Function) {
-      return $http.post('/auth', {email, password})
+      return $http.post('/auth/login', {email, password})
         .then(res => {
           currentUser = res.data;
           return {
@@ -27,6 +27,7 @@ export function AuthService($http, $q) {
 
     logout() {
       currentUser = null;
+      return $http.post('/auth/logout');
     },
 
     isLoggedIn() {
@@ -37,7 +38,6 @@ export function AuthService($http, $q) {
       return Object.assign({}, currentUser);
     },
     setUser(user) {
-      console.log(user);
       currentUser = user;
     }
   };

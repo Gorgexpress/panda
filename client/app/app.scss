@@ -20,6 +20,11 @@ $fa-font-path: '/assets/fonts/font-awesome/';
   background: Lime;
 }
 
+a.navbar-text {
+  cursor: pointer;
+  cursor: hand;
+}
+
 // Component styles are injected through gulp
 /* inject:scss */
 @import 'main/main';

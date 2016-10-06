@@ -7,7 +7,7 @@ import request from 'request';
 'use strict';
 
 // Gets a list of Things
-export function index(req, res) {
+export function login(req, res) {
   let buffer = new Buffer(req.body.email + ':' + req.body.password);
   let auth = 'Basic ' + buffer.toString('base64');
   let options = {
@@ -40,4 +40,12 @@ export function index(req, res) {
       res.status(200).json(data);
     }
   });
+}
+
+export function logout(req, res) {
+  if(!req.session)
+    return res.status(500).json({});
+  req.session.destroy();
+  res.status(200).json({});
+
 }

@@ -8,7 +8,8 @@ import ngSanitize from 'angular-sanitize';
 
 import uiRouter from 'angular-ui-router';
 import uiBootstrap from 'angular-ui-bootstrap';
-// import ngMessages from 'angular-messages';
+import ngMessages from 'angular-messages';
+
 
 import {
   routeConfig
@@ -28,7 +29,7 @@ import calendar from './calendar/calendar.component';
 import './app.scss';
 
 angular.module('pandaApp', [ngCookies, ngResource, ngSanitize, uiRouter, uiBootstrap, navbar,
-    footer, main, constants, util, Auth, Modal, camelcaseToHuman, inputType, calendar
+    footer, main, constants, util, Auth, Modal, camelcaseToHuman, inputType, calendar, ngMessages
   ])
   .config(routeConfig);
 

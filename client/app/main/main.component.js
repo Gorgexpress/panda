@@ -53,7 +53,7 @@ export class MainController {
   }
 
   edit(isValid) {
-    if(isValid)
+    if(isValid && this.userInfo.password === this.confirmPassword)
       this.Modal.confirm.edit(args => {
         this.$http.put('/api/edit', this.userInfo)
           .then(response => {
@@ -66,8 +66,10 @@ export class MainController {
             this.Modal.confirm.error()(err.data)
           });
       })();
-    else
+    else if(!isValid)
       this.Modal.confirm.error()('form invalid');
+    else
+      this.Modal.confirm.error()('Password confirmation does not match New Password');
   }
 }
 

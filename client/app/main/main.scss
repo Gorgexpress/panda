@@ -31,6 +31,11 @@ input {
 
 .dl-horizontal dt {
     white-space: normal;
+    width:200px;
+}
+
+.dl-horizontal dd {
+    margin-left: 220px;
 }
 
 .form-control {
@@ -41,5 +46,7 @@ input {
 .input-group {
     max-width: 250px;
 }
+
+
 
 

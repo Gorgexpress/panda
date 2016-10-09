@@ -2,79 +2,124 @@
   <div class="container">
     <div class="row">
       <div class="col-md-offset-4">
-    <div ng-if="!$ctrl.Auth.isLoggedIn()">
-      <p class="lead">Please log in</p>
-      <button class="btn btn-primary" ng-click=$ctrl.login()>Login</button>
-    </div>
-    <div ng-if="$ctrl.Auth.isLoggedIn()" ng-init="$ctrl.userInfo = $ctrl.Auth.getUser()">
+        <div ng-if="!$ctrl.Auth.isLoggedIn()">
+          <p class="lead">Please log in</p>
+          <button class="btn btn-primary" ng-click=$ctrl.login()>Login</button>
+        </div>
 
+        <div ng-if="$ctrl.Auth.isLoggedIn()" ng-init="$ctrl.userInfo = $ctrl.Auth.getUser()">
 
-
-      <form name="userForm" ng-submit="$ctrl.edit(userForm.$valid)" novalidate>
-        <dl class="dl-horizontal">
-          <dt>First Name</dt>
-          <dd>
-          <input class="form-control" ng-show="$ctrl.editEnabled" type="text" ng-model="$ctrl.userInfo.firstName">
-          <span ng-show="!$ctrl.editEnabled">{{$ctrl.userInfo.firstName}}</span>
-          </dd>
-          <dt>Last Name</dt>
-          <dd>
-          <input class="form-control" ng-show="$ctrl.editEnabled" type="text" ng-model="$ctrl.userInfo.lastName">
-          <span ng-show="!$ctrl.editEnabled">{{$ctrl.userInfo.lastName}}</span>
-          </dt>
-          <dt>Email</dt>
-          <dd>
-          <input class="form-control" name="email" ng-show="$ctrl.editEnabled" type="email" ng-model="$ctrl.userInfo.email">
-          <div ng-messages="userForm.email.$error" ng-if="userForm.email.$dirty">
-            <div ng-message="email">Not a valid email address</div>
+          <!--Description list displayed when not in edit mode -->
+          <dl class="dl-horizontal" ng-if="!$ctrl.editEnabled">
+            <dt>First Name</dt>
+            <dd>
+            <span ng-show="!$ctrl.editEnabled">{{$ctrl.userInfo.firstName}}</span>
+            </dd>
+            <dt>Last Name</dt>
+            <dd>
+            <span ng-show="!$ctrl.editEnabled">{{$ctrl.userInfo.lastName}}</span>
+            </dt>
+            <dt>Email</dt>
+            <dd>
+            <div ng-messages="userForm.email.$error" ng-if="userForm.email.$dirty">
+              <div ng-message="email">Not a valid email address</div>
             </div>
-          <span ng-show="!$ctrl.editEnabled">{{$ctrl.userInfo.email}}</span>
-          </dd>
-
-          <dt>Phone Number</dt>
-          <dd>
-          <input class="form-control" ng-show="$ctrl.editEnabled" type="tel" ng-model="$ctrl.userInfo.phone">
-          <span ng-show="!$ctrl.editEnabled">{{$ctrl.userInfo.phone}}</span>
-          </dd>
-
-          <dt>Enable Text Messaging</dt>
-          <dd>
-          <input class="checkbox" type="checkbox" ng-model="$ctrl.userInfo.receiveSmsNotifications" ng-disabled="!$ctrl.editEnabled">
-          </dd>
-
-          <dt>Enable Email Notifications</dt>
-          <dd>
-          <input class="checkbox" type="checkbox" ng-model="$ctrl.userInfo.receiveEmail" ng-disabled="!$ctrl.editEnabled">
-          </dd>
-          <div ng-show=$ctrl.editEnabled>
-            <dt>Current Password</dt>
-            <dd>
-            <input class="form-control" type="password" ng-model="$ctrl.userInfo.currentPassword">
-            </dd>
-          </div>
-          <dt></dt>
-
-          <dd class="row" ng-show="$ctrl.editEnabled">
-          <button ng-show="$ctrl.editEnabled" type="button" ng-class="!$ctrl.editPassword ? 'btn btn-primary' : 'btn btn-danger'" ng-click="$ctrl.toggleEditPassword()">{{!$ctrl.editPassword ? 'Change Password' : 'Cancel'}}</button>
-          </dd>
-          <div ng-show="$ctrl.editPassword">
-            <dt>New Password</dt>
-            <dd>
-            <input class="form-control" type="password" ng-model="$ctrl.userInfo.password">
+            <span ng-show="!$ctrl.editEnabled">{{$ctrl.userInfo.email}}</span>
             </dd>
 
-            <dt>Confirm New Password</dt>
+            <dt>Phone Number</dt>
             <dd>
-            <input class="form-control" type="password" ng-model="$ctrl.confirmPassword">
+            <span ng-show="!$ctrl.editEnabled">{{$ctrl.userInfo.phone}}</span>
             </dd>
-          </div>
-        </dl>
 
-        <button type="button" ng-class="$ctrl.editEnabled ? 'btn btn-danger pull-right' : 'btn btn-primary pull-right'" ng-click="$ctrl.toggleEditMode()">{{$ctrl.editEnabled ? 'Cancel' : 'Edit'}}</button>
-        <button ng-show="$ctrl.editEnabled" type="submit" class="btn btn-primary pull-right">Confirm</button>
-      </form>
+            <dt>Enable Text Messaging</dt>
+            <dd>
+            {{$ctrl.userInfo.receiveSmsNotifications ? 'Yes' : 'No'}}
+            </dd>
+
+            <dt>Enable Email Notifications</dt>
+            <dd>
+            {{$ctrl.userInfo.receiveEmail ? 'Yes' : 'No'}}
+            </dd>
+          </dl> 
+
+
+
+          <!--Form displayed when in edit mode -->
+          <form ng-if="$ctrl.editEnabled" name="userForm" ng-submit="$ctrl.edit(userForm.$valid)" novalidate>
+            <div class="form-group">
+              <label>
+                First Name
+                <input class="form-control" ng-show="$ctrl.editEnabled" type="text" ng-model="$ctrl.userInfo.firstName">
+              </label>
+              <label>
+                Last Name
+                <input class="form-control" ng-show="$ctrl.editEnabled" type="text" ng-model="$ctrl.userInfo.lastName">
+              </label>
+            </div>
+            <div class="form-group">
+              <label>
+                Email
+                <input class="form-control" name="email" ng-show="$ctrl.editEnabled" type="email" ng-model="$ctrl.userInfo.email">
+                <div ng-messages="userForm.email.$error" ng-if="userForm.email.$dirty">
+                  <div ng-message="email">Not a valid email address</div>
+                </div>
+              </label>
+            </div>
+            <div class="form-group">
+              <label>
+                Phone Number
+                <input class="form-control" ng-show="$ctrl.editEnabled" type="tel" ng-model="$ctrl.userInfo.phone">
+              </label>
+            </div>
+
+            <div class="form-group">
+            <div class="checkbox">
+              <label>
+                <input class="checkbox" type="checkbox" ng-model="$ctrl.userInfo.receiveSmsNotifications" ng-disabled="!$ctrl.editEnabled">
+                Enable Text Messaging
+              </label>
+            </div>
+            <div class="checkbox">
+              <label>
+                <input class="checkbox" type="checkbox" ng-model="$ctrl.userInfo.receiveEmail" ng-disabled="!$ctrl.editEnabled">
+                Enable Email Notifications
+              </label>
+            </div>
+            </div>
+            <!-- current password is currently unused
+              <div ng-show=$ctrl.editEnabled>
+              <dt>Current Password</dt>
+              <dd>
+              <input class="form-control" type="password" ng-model="$ctrl.userInfo.currentPassword">
+              </dd>
+              </div>
+              <dt></dt>-->
+
+              <div class="form-group">
+                <button ng-show="$ctrl.editEnabled" type="button" ng-class="!$ctrl.editPassword ? 'btn btn-primary' : 'btn btn-danger'" ng-click="$ctrl.toggleEditPassword()">{{!$ctrl.editPassword ? 'Change Password' : 'Cancel'}}</button>
+              </div>
+              <div ng-show="$ctrl.editPassword">
+                <div class="form-group">
+                  <label>
+                    New Password
+                    <input class="form-control" type="password" ng-model="$ctrl.userInfo.password">
+                  </label>
+                </div>
+                <div class="form-group">
+                  <label>
+                    Confirm New Password
+                    <input class="form-control" type="password" ng-model="$ctrl.confirmPassword">
+                  </label>
+                </div>
+              </div>
+
+              <button type="button" class="btn btn-danger pull-right" ng-click="$ctrl.toggleEditMode()">Cancel</button>
+              <button ng-show="$ctrl.editEnabled" type="submit" class="btn btn-primary pull-right">Confirm</button>
+          </form>
+          <button ng-show="!$ctrl.editEnabled" type="button" class="btn btn-primary pull-right" ng-click="$ctrl.toggleEditMode()">Edit</button>
+        </div>
       </div>
-  </div>
     </div>
   </div>
 </header>

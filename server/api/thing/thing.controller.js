@@ -28,10 +28,11 @@ export function edit(req, res) {
   };
 
   request(options, (error, response, body) => {
-    if(!body)
+    if(!body) 
       return res.status(response.statusCode).json(`Error Code: ${response.statusCode}`);
-    if(!body.success){
-      return res.status(response.statusCode).json(body.message);
+    if(!body.success || !body.data){
+      let errorMessage = body.message || 'Edit failed but no error message was received';
+      return res.status(response.statusCode).json(errorMessage);
     }
     let data = {
       email: body.data.email,
